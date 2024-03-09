@@ -1,9 +1,10 @@
 import requests
 from bs4 import BeautifulSoup
 import csv
+import sys
 
 
-def web_crawler(url, output_file="links.csv"):
+def web_crawler(url, output_file="output.csv"):
     try:
         response = requests.get(url)
         response.raise_for_status()  # Verificar si hay errores en la solicitud
@@ -44,9 +45,11 @@ def web_crawler(url, output_file="links.csv"):
         print(f"Error: {e}")
 
 
-# Parámetros
-target_url = "[SITE-URL]"
-output_file = "links.csv"
+if __name__ == "__main__":
+    # Verificar si se proporciona la URL y output como argumentos
+    if len(sys.argv) != 3:
+        print("Uso: python3 web-crawler.py <target-url> <output-csv>")
+        sys.exit(1)
 
-# Ejecución del web crawler
-web_crawler(target_url, output_file)
+    # Llamar a la función del web crawler
+    web_crawler(sys.argv[1], sys.argv[2])
